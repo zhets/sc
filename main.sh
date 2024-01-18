@@ -83,6 +83,19 @@ fi
   read "[ ${green}INFO${NC} ] Press [ Enter ] to continue installation"
   sleep 1
   clear
+function LOGO() {
+echo -e "
+    ┌───────────────────────────────────────────────┐
+ ───│                                               │───
+ ───│    $Green┌─┐┬ ┬┌┬┐┌─┐┌─┐┌─┐┬─┐┬┌─┐┌┬┐  ┬  ┬┌┬┐┌─┐$NC   │───
+ ───│    $Green├─┤│ │ │ │ │└─┐│  ├┬┘│├─┘ │   │  │ │ ├┤ $NC   │───
+ ───│    $Green┴ ┴└─┘ ┴ └─┘└─┘└─┘┴└─┴┴   ┴   ┴─┘┴ ┴ └─┘$NC   │───
+    │    ${YELLOW}Copyright${FONT} (C)$GRAY https://github.com/zhets$NC       │
+    └───────────────────────────────────────────────┘
+         ${RED} SCRIPT AUTO INSTALL PREMIUM ${FONT}    
+           ${RED} SCRIPT MOD BY XDXL ${FONT}
+   ${RED}JANGAN MENGGUNAKAN LAYANAN VPN UNTUK INSTALLASI !${FONT}"
+ }
 checking_sc
 curl "ipinfo.io/org?token=7a814b6263b02c" > /root/.isp
 curl "ipinfo.io/city?token=7a814b6263b02c" > /root/.city
@@ -165,6 +178,7 @@ gotop_latest="$(curl -s https://api.github.com/repos/xxxserxxx/gotop/releases | 
 
 function pasang_domain() {
 clear
+LOGO
 echo -e "   ╓─────────────────────────────╖"
 echo -e "   |        \e[1;32mSETUP DOMAIN\033[0m             "
 echo -e "   ╙─────────────────────────────╜"
