@@ -1,7 +1,4 @@
 #!/bin/bash
-dateFromServer=$(curl -v --insecure --silent https://google.com/ 2>&1 | grep Date | sed -e 's/< Date: //')
-biji=`date +"%Y-%m-%d" -d "$dateFromServer"`
-#########################
 
 # // color
 GREENBO="\e[92;1m"
@@ -12,7 +9,7 @@ BGYELLOW="\033[43;37m" # kuning
 BGPURPLE="\033[45;37m" # ungu
 
 # // source
-source /var/lib/SIJA/ipvps.conf
+source /var/lib/xdxl/ipvps.conf
 if [[ "$IP" = "" ]]; then
 domain=$(cat /etc/xray/domain)
 else
@@ -29,7 +26,7 @@ echo -e ""
 clear
 		echo -e "===============[ TROJAN ]=============="
 			echo ""
-			echo "Nama Sudah ada, Coba Lu Tod Ganti Nama."
+			echo "Nama Sudah ada, Silahkan gunakan username lain !!!"
 			echo ""
         echo -e "======================================"
 			read -n 1 -s -r -p "Press any key to back on menu"
@@ -46,26 +43,28 @@ sed -i '/#trojangrpc$/a\#! '"$user $exp"'\
 },{"password": "'""$uuid""'","email": "'""$user""'"' /etc/xray/config.json
 
 systemctl restart xray
-trojanlink1="trojan://${uuid}@${domain}:${tr}?mode=gun&security=tls&type=grpc&serviceName=trojan-grpc&sni=bug.com#${user}"
-trojanlink="trojan://${uuid}@isi_bug_disini:${tr}?path=%2Ftrojan-ws&security=tls&host=${domain}&type=ws&sni=${domain}#${user}"
+trojanlink1="trojan://${uuid}@${domain}:443?mode=gun&security=tls&type=grpc&serviceName=trojan&sni=bug.com#${user}"
+trojanlink="trojan://${uuid}@${domain}:443?path=%2Ftrojan&security=tls&host=${domain}&type=ws&sni=${domain}#${user}"
+trojan_n_tls="trojan://${uuid}@${domain}:80?path=%2Ftrojan&security=nonr&host=${domain}&type=ws#${user}"
 clear
 echo -e "===============[ TROJAN ]=============="
 echo -e " "
-echo -e "Remarks      : ${user}"
-echo -e "Expired On   : $exp"
-echo -e "Host/IP      : ${domain}"
-echo -e "port         : ${tr}"
-echo -e "Key          : ${uuid}"
-echo -e "Path         : /trojan-ws"
-echo -e "ServiceName  : trojan-grpc"
+echo -e "Username      : ${user}"
+echo -e "Expired On    : $exp"
+echo -e "Host/IP       : ${domain}"
+echo -e "Port none TLS : 80, 8080"
+echo -e "Port SSL/TLS  : 443, 8443"
+echo -e "Uuid          : ${uuid}"
+echo -e "Path          : /trojan"
+echo -e "ServiceName   : trojan"
 echo -e "==============="
-echo -e "Link WS      : "
+echo -e "Link SSL/TLS : "
 echo -e "${trojanlink}"
+echo -e "==============="
+echo -e "Link none TLS:"
+echo -e "${trojan_n_tls}"
 echo -e "==============="
 echo -e "Link GRPC    : "
 echo -e "${trojanlink1}"
 echo -e "==============="
 echo ""
-read -n 1 -s -r -p "Press any key to back on menu"
-
-menu
