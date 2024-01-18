@@ -1,10 +1,7 @@
 #!/bin/bash
-#
-# ==================================================
-
 # initializing var
 export DEBIAN_FRONTEND=noninteractive
-MYIP=$(wget -qO- ipinfo.io/ip);
+MYIP=$(curl -sS ipv4.icanhazip.com);
 MYIP2="s/xxxxxxxxx/$MYIP/g";
 NET=$(ip -o $ANU -4 route show to default | awk '{print $5}');
 source /etc/os-release
@@ -67,20 +64,8 @@ apt upgrade -y
 apt dist-upgrade -y
 apt-get remove --purge ufw firewalld -y
 apt-get remove --purge exim4 -y
-
-#install jq
-apt -y install jq
-
-#install shc
 apt -y install shc
-
-# install wget and curl
-apt -y install wget curl
-
-#figlet
 apt-get install figlet -y
-apt-get install ruby -y
-gem install lolcat
 
 # set time GMT +7
 ln -fs /usr/share/zoneinfo/Asia/Jakarta /etc/localtime
@@ -374,7 +359,7 @@ cd
 cat > /etc/cron.d/re_otm <<-END
 SHELL=/bin/sh
 PATH=/usr/local/sbin:/usr/local/bin:/sbin:/bin:/usr/sbin:/usr/bin
-0 2 * * * root /sbin/reboot
+0 3 * * * root /sbin/reboot
 END
 
 cat > /etc/cron.d/xp_otm <<-END
