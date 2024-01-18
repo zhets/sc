@@ -40,19 +40,20 @@ echo -e "\e[40;1;37m        Create SSH Account         ${x}"
 echo -e "\e[33m━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━${x}"
 read -p "Username       : " Login
 read -p "Password       : " Pass
+read -p "Limit IP       : " limitip
 read -p "Expired (Days) : " expired
 useradd -e `date -d "$expired days" +"%Y-%m-%d"` -s /bin/false -M $Login
 exp="$(chage -l $Login | grep "Account expires" | awk -F": " '{print $2}')"
 echo -e "$Pass\n$Pass\n"|passwd $Login &> /dev/null
 hari-ini=`date -d "0 days" +"%Y-%m-%d"`
+echo "${limitip}" > /etc/xray/limit/ssh/ip/${user}
 clear
 echo -e "${z}◇━━━━━━━━━━━━━━━━━━━◇${x}"                 
 echo -e "   <=  SSH ACCOUNT =>"       
 echo -e "${z}◇━━━━━━━━━━━━━━━━━━━◇${x}"
 echo -e "Username   : $Login"
 echo -e "Password   : $Pass"
-echo -e "Created On : $hari-ini"
-echo -e "Expired On : $exp"
+echo -e "Limit IP   : ${limitip} Device"
 echo -e "${z}◇━━━━━━━━━━━━━━━━━━━◇${x}"
 echo -e "CITY          : $(cat /root/.city)"
 echo -e "ISP           : $(cat /root/.isp)"
@@ -69,4 +70,7 @@ echo -e "Badvpn Udgpw  : 7100 - 7500"
 echo -e "${z}◇━━━━━━━━━━━━━━━━━━━◇${x}"
 echo -e "Payload WS  => "
 echo -e "GET wss://[host]/ HTTP/1.1[crlf]Host: [host][crlf]Upgrade: websocket[crlf][crlf]"
+echo -e "${z}◇━━━━━━━━━━━━━━━━━━━◇${x}"
+echo -e "Created On : $hari-ini"
+echo -e "Expired On : $exp"
 echo -e "${z}◇━━━━━━━━━━━━━━━━━━━◇${x}"
