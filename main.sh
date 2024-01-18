@@ -227,6 +227,8 @@ mesg n || true
 menu
 END
 chmod 644 /root/.profile
+mkdir -p /etc/xray/limit
+mkdir -p /etc/xray/limit/ip
 
 if [ -f "/root/log-install.txt" ]; then
 rm /root/log-install.txt > /dev/null 2>&1
