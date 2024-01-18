@@ -15,4 +15,4 @@ else
 echo > /dev/null
 fi
 sleep 0.1
-done￼
+done￼ 
