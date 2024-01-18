@@ -254,7 +254,7 @@ netfilter-persistent save
 netfilter-persistent reload
 
 # download script
-cd /usr/bin
+cd /usr/local/sbin
 # menu
 wget -O menu "https://raw.githubusercontent.com/zhets/sc/main/menu/menu.sh"
 wget -O xmenu "https://raw.githubusercontent.com/zhets/sc/main/menu/xmenu.sh"
@@ -354,7 +354,10 @@ chmod +x xp
 chmod +x acs-set
 chmod +x sshws
 cd
-
+cd /usr/bin
+wget -q -O limit-ssh "https://raw.githubusercontent.com/zhets/sc/main/limit/limit-ssh"
+chmod +x limit-ssh
+cd
 
 cat > /etc/cron.d/re_otm <<-END
 SHELL=/bin/sh
@@ -365,7 +368,13 @@ END
 cat > /etc/cron.d/xp_otm <<-END
 SHELL=/bin/sh
 PATH=/usr/local/sbin:/usr/local/bin:/sbin:/bin:/usr/sbin:/usr/bin
-0 0 * * * root /usr/bin/xp
+0 0 * * * root /usr/local/zbin/xp
+END
+
+cat > /etc/cron.d/lim_ssh <<-END
+SHELL=/bin/sh
+PATH=/usr/local/sbin:/usr/local/bin:/sbin:/bin:/usr/sbin:/usr/bin
+*/1 * * * * root /usr/bin/limit-ssh
 END
 
 cat > /home/re_otm <<-END
