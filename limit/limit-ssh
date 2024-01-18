@@ -1,4 +1,5 @@
 #!/bin/bash
+
 mulog=$(cekssh)
 date=$(date)
 data=( `ls /etc/xray/limit/ssh/ip`);
@@ -15,4 +16,5 @@ else
 echo > /dev/null
 fi
 sleep 0.1
-done￼ 
+
+done
