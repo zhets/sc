@@ -1,13 +1,38 @@
 #!/bin/bash
+
 clear
-source /var/lib/xdxl/ipvps.conf
-if [[ "$IP" = "" ]]; then
-domain=$(cat /etc/xray/domain)
+exitsc="\033[0m"
+y="\033[1;93m"
+j="\033[0;33m"
+function lane() {
+echo -e "${y}────────────────────────────────────────────${exitsc}"
+}
+url_izin="https://raw.githubusercontent.com/zhets/izinsc/main/ip"
+ipsaya=$(curl -sS ipv4.icanhazip.com)
+data_server=$(curl -v --insecure --silent https://google.com/ 2>&1 | grep Date | sed -e 's/< Date: //')
+date_list=$(date +"%Y-%m-%d" -d "$data_server")
+checking_sc() {
+useexp=$(wget -qO- $url_izin | grep $ipsaya | awk '{print $3}')
+if [[ $date_list < $useexp ]]; then
+echo -ne
 else
-domain=$IP
+lane
+echo -e "\033[42m          404 NOT FOUND AUTOSCRIPT          ${exitsc}"
+lane
+echo -e ""
+echo -e "            \033[0;35mPERMISSION DENIED !${exitsc}"
+echo -e "   ${j}Your VPS${exitsc} $ipsaya ${j}Has been Banned${exitsc}"
+echo -e "     ${j}Buy access permissions for scripts${exitsc}"
+echo -e "             ${j}Contact Admin :${exitsc}"
+echo -e "      \033[0;36mWhatsapp${exitsc} wa.me/6285935195701"
+lane
+exit
 fi
-tls="$(cat ~/log-install.txt | grep -w "Vless TLS" | cut -d: -f2|sed 's/ //g')"
-none="$(cat ~/log-install.txt | grep -w "Vless None TLS" | cut -d: -f2|sed 's/ //g')"
+}
+checking_sc
+source /var/lib/xdxl/ipvps.conf
+domain=$(cat /etc/xray/domain)
+
 until [[ $user =~ ^[a-zA-Z0-9_]+$ && ${CLIENT_EXISTS} == '0' ]]; do
 echo -e "===============[ Add Title Account ]=============="
 echo ""
