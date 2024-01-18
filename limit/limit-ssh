@@ -1,0 +1,18 @@
+#!/bin/bash
+mulog=$(cekssh)
+date=$(date)
+data=( `ls /etc/xray/limit/ssh/ip`);
+for user in "${data[@]}"
+do
+iplimit=$(cat /etc/xray/limit/ssh/ip/$user)
+cekcek=$(echo -e "$mulog" | grep $user | wc -l);
+if [[ $cekcek -gt $iplimit ]]; then
+egrep "^$user" /etc/passwd >/dev/null
+passwd -l $user
+systemctl restart dropbear
+systemctl restart ws-stunnel
+else
+echo > /dev/null
+fi
+sleep 0.1
+done￼
