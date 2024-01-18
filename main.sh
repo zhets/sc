@@ -97,11 +97,7 @@ echo -e "[ ${green}INFO${NC} ] Aight good ... installation file is ready"
 sleep 2
 
 mkdir -p /etc/xray
-mkdir -p /etc/v2ray
 touch /etc/xray/domain
-touch /etc/v2ray/domain
-touch /etc/xray/scdomain
-touch /etc/v2ray/scdomain
 mkdir -p /var/lib/xdxl >/dev/null 2>&1
 echo "IP=" >> /var/lib/xdxl/ipvps.conf
 
@@ -122,12 +118,8 @@ sudo apt install -y at screen curl jq bzip2 gzip coreutils rsyslog iftop \
 sudo apt-get install nodejs -y
 sysctl -w net.ipv6.conf.all.disable_ipv6=1 >/dev/null 2>&1
 sysctl -w net.ipv6.conf.default.disable_ipv6=1 >/dev/null 2>&1
-apt upgrade -y
-apt update -y
-sysctl -w net.ipv6.conf.all.disable_ipv6=1 
-sysctl -w net.ipv6.conf.default.disable_ipv6=1 
 apt install -y bzip2 gzip coreutils screen curl unzip
-apt install -y git curl python ruby 
+apt install -y git curl python ruby jq curl at
 apt install wondershaper -y
 gem install lolcat
 
@@ -184,12 +176,8 @@ echo ""
 if [[ $host == "1" ]]; then
 echo -e "   \e[1;32mMasukan Domain Kamu !$NC"
 read -p "   Subdomain: " pp
-echo "$pp" > /root/scdomain
-echo "$pp" > /etc/xray/scdomain
-echo "$pp" > /etc/xray/domain
-echo "$pp" > /etc/v2ray/domain
-echo $pp > /root/domain
-echo "IP=$pp" > /var/lib/SIJA/ipvps.conf
+echo "$pp" > /root/domain
+echo "IP=$pp" > /var/lib/xdxl/ipvps.conf
 elif [[ $host == "2" ]]; then
 #install cf
 wget -q https://raw.githubusercontent.com/zhets/sc/main/cf.sh && chmod +x cf.sh && ./cf.sh
@@ -236,7 +224,6 @@ if [ "$BASH" ]; then
 fi
 
 mesg n || true
-clear
 menu
 END
 chmod 644 /root/.profile
