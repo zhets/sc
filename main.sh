@@ -30,11 +30,10 @@ echo "$localip $(hostname)" >> /etc/hosts
 fi
 export IP=$( curl -sS icanhazip.com )
 url_izin="https://raw.githubusercontent.com/FadlyNotNot/ipku/main/ipvps"
-ipsaya=$(wget -qO- ipinfo.io/ip)
 data_server=$(curl -v --insecure --silent https://google.com/ 2>&1 | grep Date | sed -e 's/< Date: //')
 date_list=$(date +"%Y-%m-%d" -d "$data_server")
 checking_sc() {
-  useexp=$(wget -qO- $url_izin | grep $ipsaya | awk '{print $3}')
+  useexp=$(wget -qO- $url_izin | grep $IP | awk '{print $3}')
   if [[ $date_list < $useexp ]]; then
     echo -ne
   else
@@ -43,7 +42,7 @@ checking_sc() {
     echo -e "\033[1;93m────────────────────────────────────────────\033[0m"
     echo -e ""
     echo -e "            ${RED}PERMISSION DENIED !${NC}"
-    echo -e "   \033[0;33mYour VPS${NC} $ipsaya \033[0;33mHas been Banned${NC}"
+    echo -e "   \033[0;33mYour VPS${NC} $IP \033[0;33mHas been Banned${NC}"
     echo -e "     \033[0;33mBuy access permissions for scripts${NC}"
     echo -e "             \033[0;33mContact Admin :${NC}"
     echo -e "      \033[0;36mTelegram${NC} t.me/fv_stores"
@@ -172,6 +171,7 @@ gotop_latest="$(curl -s https://api.github.com/repos/xxxserxxx/gotop/releases | 
     
     wget -q https://raw.githubusercontent.com/zhets/sc/main/xray/bbr.sh &&  chmod +x bbr.sh && ./bbr.sh
 
+function pasang_domain() {
 clear
 echo -e "   ╓─────────────────────────────╖"
 echo -e "   |        \e[1;32mSETUP DOMAIN\033[0m             "
@@ -196,10 +196,12 @@ wget -q https://raw.githubusercontent.com/zhets/sc/main/cf.sh && chmod +x cf.sh 
 rm -f /root/cf.sh
 clear
 else
-wget -q https://raw.githubusercontent.com/zhets/sc/main/cf.sh && chmod +x cf.sh && ./cf.sh
-rm -f /root/cf.sh
-clear
+echo -e " Input dengan benar !!!"
+sleep 2
+pasang_domain
 fi
+}
+pasang_domain
 
 #install ssh ovpn
 echo -e "\e[33m━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m"
@@ -296,6 +298,7 @@ echo "" | tee -a log-install.txt
 rm /root/main.sh >/dev/null 2>&1
 rm /root/ins-xray.sh >/dev/null 2>&1
 rm /root/insshws.sh >/dev/null 2>&1
+rm /root/ssh-vpn.sh >/dev/null 2>&1
 secs_to_human "$(($(date +%s) - ${start}))" | tee -a log-install.txt
 echo -e "
 "
