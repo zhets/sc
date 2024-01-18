@@ -14,7 +14,7 @@ G="\033[1;32m"
 N="\e[0m"
 echo -e "${G}===================[ UPDATE MENU ]=====================${N}"
 sleep 3
-cd /usr/bin
+cd /usr/local/sbin
 # menu
 wget -O menu "https://raw.githubusercontent.com/zhets/sc/main/menu/menu.sh"
 wget -O menu-backup "https://raw.githubusercontent.com/zhets/sc/main/menu/menu-backup.sh"
