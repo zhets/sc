@@ -1,0 +1,58 @@
+#!/bin/bash
+# //            🇵🇸 FREE PALESTINE 🇵🇸
+# //                  🇮🇱 IS 🐷
+# // ——————————————————————————————
+# // Auto delete trial by XDXL STORE 🇮🇩
+# // My Telegram: t.me/xdxl_store
+# // My Channel: t.me/xdx_vpn
+# // Telegram Group: t.me/GrupConfigId
+# // Setup 1 for 1 minutes
+# // Delete trial with cron
+# // ——————————————————————————————
+
+user="$2"
+
+function ssh(){
+getent passwd ${user}
+userdel -rf ${user}
+sed -i "/^#ssh# $user/d" /etc/ssh/.ssh.db
+systemctl restart ws-dropbear ws-stunnel
+}
+function trojan(){
+exp=$(grep -wE "^### $user" "/etc/xray/config.json" | cut -d ' ' -f 3 | sort | uniq)
+sed -i "/^### $user $exp/,/^},{/d" /etc/trojan/.trojan.db
+sed -i "/^#! $user $exp/,/^},{/d" /etc/xray/config.json
+systemctl restart ws
+}
+
+function vmess(){
+exp=$(grep -wE "^### $user" "/etc/xray/config.json" | cut -d ' ' -f 3 | sort | uniq)
+sed -i "/^### $user $exp/,/^},{/d" /etc/xray/config.json
+sed -i "/^### $user $exp/,/^},{/d" /etc/vmess/.vmess.db
+systemctl restart xray
+}
+
+function vless(){
+exp=$(grep -wE "^#& $user" "/etc/xray/config.json" | cut -d ' ' -f 3 | sort | uniq)
+sed -i "/^#& $user $exp/,/^},{/d" /etc/xray/config.json
+sed -i "/^#& $user $exp/,/^},{/d" /etc/vless/.vless.db
+systemctl restart xray
+}
+
+function noobzvpns() {
+noobzvpns --remove-user ${user}
+rm -rf /var/www/html/noobzvpns-${user}.txt
+systemctl restart noobzvpns
+}
+
+if [[ ${1} == "ssh" ]]; then
+ssh
+elif [[ ${1} == "vmess" ]]; then
+vmess
+elif [[ ${1} == "vless" ]]; then
+vless
+elif [[ ${1} == "trojan" ]]; then
+trojan
+elif [[ ${1} == "noobzvpns" ]]; then
+noobzvpns
+fi￼
