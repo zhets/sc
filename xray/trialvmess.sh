@@ -1,10 +1,27 @@
+#!/bin/bash
+ungu="\033[0;35m"
+bc="\033[5;36m"
+b="\033[0;96m"
+y="\033[0;33m"
+NC="\033[0m"
+function lane() {
+echo -e "${b}─────────────────────────────────"
+}
+clear
+lane
+echo -e "       [ CREATE VMESS ACCOUNT ]        "
+lane
+echo -e "${ungu} Input Number for expired"
+echo -e " Example:"
+echo -e " 1 for 1 minutes ${NC}"
+echo -e ""
+read -p " Sett Expired [ minutes ]: " timer
+
 domain=$(cat /etc/xray/domain)
-tls="$(cat ~/log-install.txt | grep -w "Vmess TLS" | cut -d: -f2|sed 's/ //g')"
-none="$(cat ~/log-install.txt | grep -w "Vmess None TLS" | cut -d: -f2|sed 's/ //g')"
-user=Hencet-`</dev/urandom tr -dc X-Z0-9 | head -c4`
+user=v-`</dev/urandom tr -dc a-z0-9 | head -c5`
 uuid=$(cat /proc/sys/kernel/random/uuid)
-masaaktif=30
-exp=`date -d "$masaaktif Menit" +"%Y-%m-%d"`
+masaaktif=1
+exp=`date -d "$masaaktif days" +"%Y-%m-%d"`
 sed -i '/#vmess$/a\### '"$user $exp"'\
 },{"id": "'""$uuid""'","alterId": '"0"',"email": "'""$user""'"' /etc/xray/config.json
 exp=`date -d "$masaaktif menit" +"%Y-%m-%d"`
@@ -49,7 +66,7 @@ grpc=`cat<<EOF
       "id": "${uuid}",
       "aid": "0",
       "net": "grpc",
-      "path": "vmess-grpc",
+      "path": "vmess",
       "type": "none",
       "host": "",
       "tls": "tls"
@@ -62,30 +79,30 @@ vmesslink1="vmess://$(echo $acs | base64 -w 0)"
 vmesslink2="vmess://$(echo $ask | base64 -w 0)"
 vmesslink3="vmess://$(echo $grpc | base64 -w 0)"
 systemctl restart xray > /dev/null 2>&1
-service cron restart > /dev/null 2>&1
 clear
+echo "xdxl vmess ${user} | at now + $timer minutes > /dev/null 2>&1
 echo -e ""
-echo -e "===============[ TRIAL VMESS ]=============="
+lane
+echo -e "      ==[ XRAY VMESS ACCOUNT ]=="
+lane
 echo -e "Remarks        : ${user}"
-echo -e "Expiry in      : $exp"
 echo -e "Domain         : ${domain}"
-echo -e "Port TLS       : ${tls}"
-echo -e "Port none TLS  : ${none}"
+echo -e "Port TLS       : 443, 8443"
+echo -e "Port none TLS  : 80, 8080, 8880, 2082"
 echo -e "Port  GRPC     : ${tls}"
 echo -e "id             : ${uuid}"
 echo -e "alterId        : 0"
 echo -e "Security       : auto"
-echo -e "Network        : ws"
+echo -e "Network        : ws or grpc"
 echo -e "Path           : /vmess"
-echo -e "ServiceName    : vmess-grpc"
-echo -e "==============="
-echo -e "Link TLS       : ${vmesslink1}"
-echo -e "==============="
-echo -e "Link WS        : ${vmesslink2}"
-echo -e "==============="
-echo -e "Link GRPC      : ${vmesslink3}"
-echo -e "==============="
+echo -e "ServiceName    : vmess"
+lane
+echo -e "Link TLS      : ${vmesslink1}"
+lane
+echo -e "Link none TLS : ${vmesslink2}"
+lane
+echo -e "Link GRPC     : ${vmesslink3}"
+lane
+echo -e "   Expired On     : $timer minutes"
+lane
 echo ""
-read -n 1 -s -r -p "Press any key to back on menu"
-
-menu
