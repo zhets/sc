@@ -449,8 +449,8 @@ END
 # Installing Trojan Go Service
 cat > /etc/systemd/system/trojan-go.service << END
 [Unit]
-Description=Trojan-Go Service Mod
-Documentation=github.com/adammoi/vipies
+Description=Trojan-Go Service Mod By Xdxl
+Documentation=github.com/zhets
 After=network.target nss-lookup.target
 
 [Service]
@@ -478,6 +478,10 @@ cat >/etc/nginx/conf.d/xray.conf <<EOF
              listen [::]:80;
              listen 8080;
              listen [::]:8080;
+             listen 8880;
+             listen [::]:8880;
+             listen 2082;
+             listen [::]:2082;
              listen 443 ssl http2;
              listen [::]:443 http2;	
              listen 8443 ssl http2 reuseport;
