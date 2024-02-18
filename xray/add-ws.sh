@@ -112,22 +112,24 @@ vmesslink3="vmess://$(echo $grpc | base64 -w 0)"
 systemctl restart xray > /dev/null 2>&1
 service cron restart > /dev/null 2>&1
 clear
-echo -e "===============[ VMESS ]==============" | tee -a /etc/log-create-user.log
-echo -e "Username       : ${user}" | tee -a /etc/log-create-user.log
-echo -e "Domain         : ${domain}" | tee -a /etc/log-create-user.log
-echo -e "Port TLS       : 443, 8443" | tee -a /etc/log-create-user.log
-echo -e "Port none TLS  : 80, 8080" | tee -a /etc/log-create-user.log
-echo -e "Port  GRPC     : 443" | tee -a /etc/log-create-user.log
-echo -e "Uuid           : ${uuid}" | tee -a /etc/log-create-user.log
-echo -e "alterId        : 0" | tee -a /etc/log-create-user.log
-echo -e "Security       : auto" | tee -a /etc/log-create-user.log
-echo -e "Network        : WS or GRPC" | tee -a /etc/log-create-user.log
-echo -e "Path           : /vmess" | tee -a /etc/log-create-user.log
-echo -e "ServiceName    : vmess" | tee -a /etc/log-create-user.log
-echo -e "===============" | tee -a /etc/log-create-user.log
-echo -e "Link SSL/TLS   : ${vmesslink1}" | tee -a /etc/log-create-user.log
-echo -e "===============" | tee -a /etc/log-create-user.log
-echo -e "Link none TLS  : ${vmesslink2}" | tee -a /etc/log-create-user.log
-echo -e "===============" | tee -a /etc/log-create-user.log
-echo -e "Link GRPC    : ${vmesslink3}" | tee -a /etc/log-create-user.log
-echo -e "===============" | tee -a /etc/log-create-user.log
+echo -e "
+===============[ VMESS ]==============
+Username       : ${user}
+Domain         : ${domain}
+Port TLS       : 443, 8443
+Port none TLS  : 80, 8080
+Port  GRPC     : 443
+id             : ${uuid}
+alterId        : 0
+Security       : auto
+Network        : ws - grpc
+Path           : /vmess
+ServiceName    : vmess
+===============
+Link SSL/TLS  : ${vmesslink1}
+===============
+Link none TLS : ${vmesslink2}
+===============
+Link GRPC     : ${vmesslink3}
+===============
+" | tee -a /etc/xray/user/$user.txt
